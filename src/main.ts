@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, h, provide } from "vue";
 import pinia from '/@/stores/index';
 import App from '/@/App.vue';
 import router from '/@/router';
@@ -9,6 +9,8 @@ import other from '/@/utils/other';
 import ElementPlus from 'element-plus';
 import '/@/theme/index.scss';
 import VueGridLayout from 'vue-grid-layout';
+
+
 
 const app = createApp(App);
 
