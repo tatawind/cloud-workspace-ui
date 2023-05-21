@@ -3,7 +3,7 @@
 		<el-card shadow="hover">
 			<div class="system-menu-search mb15">
 				<el-input size="default" placeholder="请输入工作空间名称" style="max-width: 180px"> </el-input>
-				<el-button size="default" type="primary" class="ml10" @click="getTableData2">
+				<el-button size="default" type="primary" class="ml10" @click="getTableData">
 					<el-icon>
 						<ele-Search />
 					</el-icon>
@@ -61,6 +61,7 @@
 import { onMounted, reactive } from 'vue'
 import { workspaceQuery } from '/@/api/apollo/workspace'
 import gql from 'graphql-tag'
+import { tr } from 'element-plus/es/locale';
 
 // 定义变量内容
 const state = reactive({
@@ -74,19 +75,20 @@ const state = reactive({
 const getTableData = () => {
 
 	state.tableData.loading = true;
-	workspaceQuery(gql`
+
+	const { result } = workspaceQuery(gql`
       query getCountries {
         countries {
     		name
 			code
   		}
       }
-    `).onResult(e => {
-		state.tableData.data = e.data?.countries;
-		setTimeout(() => {
-			state.tableData.loading = false;
-		}, 500);
-	});	
+    `);
+	
+	setTimeout(() => {
+		state.tableData.data = result.value?.countries;
+		state.tableData.loading = false;
+	}, 500);
 
 };
 // 页面加载时
