@@ -21,4 +21,6 @@ const studyClient = new ApolloClient({
 
 provideApolloClient(studyClient);
 
-export { useQuery }
+const workspaceQuery = useQuery;
+
+export { workspaceQuery }
