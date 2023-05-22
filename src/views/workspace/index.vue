@@ -16,22 +16,22 @@
 					新增工作空间
 				</el-button>
 			</div>
-			<el-table :data="state.tableData.data" v-loading="state.tableData.loading" style="width: 100%" row-key="code"
+			<el-table :data="state.tableData.data" v-loading="state.tableData.loading" style="width: 100%" row-key="uuid"
 				:tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
+				<el-table-column prop="uuid" label="工作空间ID" show-overflow-tooltip></el-table-column>
 				<el-table-column label="工作空间名称" show-overflow-tooltip>
 					<template #default="scope">
 						<span class="ml10">{{ $t(scope.row.name) }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="code" label="路由路径" show-overflow-tooltip></el-table-column>
-				<el-table-column label="组件路径" show-overflow-tooltip>
+				<el-table-column label="归属人" show-overflow-tooltip>
 					<template #default="scope">
-						<span>{{ scope.row.code }}</span>
+						<span>{{ scope.row.ownerId }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="权限标识" show-overflow-tooltip>
+				<el-table-column label="创建时间" show-overflow-tooltip>
 					<template #default="scope">
-						<span>{{ scope.row.name }}</span>
+						<span>{{ scope.row.createTime }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="排序" show-overflow-tooltip width="80">
@@ -39,9 +39,9 @@
 						{{ scope.$index }}
 					</template>
 				</el-table-column>
-				<el-table-column label="类型" show-overflow-tooltip width="80">
+				<el-table-column label="状态" show-overflow-tooltip width="80">
 					<template #default="scope">
-						<el-tag type="success" size="small">{{ scope.row.name }}</el-tag>
+						<el-tag type="success" size="small">{{ scope.row.status }}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
@@ -61,7 +61,7 @@
 import { onMounted, reactive } from 'vue'
 import { workspaceQuery } from '/@/api/apollo/workspace'
 import gql from 'graphql-tag'
-import { tr } from 'element-plus/es/locale';
+import { debug } from 'console';
 
 // 定义变量内容
 const state = reactive({
@@ -76,19 +76,30 @@ const getTableData = () => {
 
 	state.tableData.loading = true;
 
-	const { result } = workspaceQuery(gql`
-      query getCountries {
-        countries {
-    		name
-			code
+	let _timestamp: string = new Date().getTime() + "";
+
+	workspaceQuery(gql`
+      query Worksapces {
+        workspaces {
+    		uuid
+            ownerId
+            name
+			status
+            createTime
   		}
       }
-    `);
-	
-	setTimeout(() => {
-		state.tableData.data = result.value?.countries;
-		state.tableData.loading = false;
-	}, 500);
+    `, null,
+		{
+			fetchPolicy: "network-only"
+		})
+		.onResult(e => {
+			state.tableData.data = e?.data?.workspaces;
+
+			setTimeout(() => {
+				state.tableData.loading = false;
+			}, 500);
+		});
+
 
 };
 // 页面加载时

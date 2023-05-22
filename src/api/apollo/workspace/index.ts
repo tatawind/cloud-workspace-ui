@@ -7,7 +7,8 @@ import {
 import { provideApolloClient, useQuery } from "@vue/apollo-composable";
 
 const httpLink = createHttpLink({
-    uri: 'https://countries.trevorblades.com/',
+    //uri: 'https://countries.trevorblades.com/',
+    uri: 'http://dev.likewind.site:9002/api/workspace/graphql'
 })
 
 // 缓存实现
