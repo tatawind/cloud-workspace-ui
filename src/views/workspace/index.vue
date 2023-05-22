@@ -44,11 +44,11 @@
 						<el-tag type="success" size="small">{{ scope.row.status }}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" show-overflow-tooltip width="140">
+				<el-table-column label="操作" show-overflow-tooltip width="200">
 					<template #default="scope">
-						<el-button size="small" text type="primary">新增</el-button>
-						<el-button size="small" text type="primary">修改</el-button>
-						<el-button size="small" text type="primary">删除</el-button>
+						<el-button size="small" text type="primary">打开IDE</el-button>
+						<el-button size="small" text type="primary">关闭</el-button>
+						<el-button size="small" text type="primary">释放</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

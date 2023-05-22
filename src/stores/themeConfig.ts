@@ -102,7 +102,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			// 是否开启色弱模式
 			isInvert: false,
 			// 是否开启水印
-			isWartermark: true,
+			isWartermark: false,
 			// 水印文案
 			wartermarkText: 'vue-next-admin',
 
@@ -111,7 +111,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 */
 			// Tagsview 风格：可选值"<tags-style-one|tags-style-four|tags-style-five>"，默认 tags-style-five
 			// 定义的值与 `/src/layout/navBars/tagsView/tagsView.vue` 中的 class 同名
-			tagsStyle: 'tags-style-five',
+			tagsStyle: 'tags-style-one',
 			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
 			animation: 'slide-right',
 			// 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
