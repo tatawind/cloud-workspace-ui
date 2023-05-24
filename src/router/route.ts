@@ -91,6 +91,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					roles: ['admin'],
 					icon: 'iconfont icon-xitongshezhi',
 				},
+			},
+			{
+				path: '/dataspace',
+				name: 'dataspace',
+				component: () => import('/@/views/dataspace/index.vue'),
+				meta: {
+					title: 'message.router.dataspace',
+					isLink: '',
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: false,
+					isIframe: false,
+					roles: ['admin'],
+					icon: 'iconfont icon-xitongshezhi',
+				},
 			}
 		],
 	},

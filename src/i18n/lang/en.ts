@@ -4,6 +4,7 @@ export default {
 		home: 'home',
 		workspace: 'workspace',
 		template:'template',
+		dataspace:'dataspace',
 		system: 'system',
 		systemMenu: 'systemMenu',
 		systemRole: 'systemRole',

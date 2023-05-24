@@ -4,6 +4,7 @@ export default {
 		home: '首页',
 		workspace: '工作空间',
 		template:'空间模板',
+		dataspace:'数据空间',
 		system: '系统设置',
 		systemMenu: '菜单管理',
 		systemRole: '角色管理',
