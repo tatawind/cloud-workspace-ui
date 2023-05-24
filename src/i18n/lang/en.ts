@@ -3,6 +3,7 @@ export default {
 	router: {
 		home: 'home',
 		workspace: 'workspace',
+		template:'template',
 		system: 'system',
 		systemMenu: 'systemMenu',
 		systemRole: 'systemRole',

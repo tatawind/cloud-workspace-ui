@@ -9,29 +9,28 @@
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="default" type="success" class="ml10">
-					<el-icon>
-						<ele-FolderAdd />
-					</el-icon>
-					新增工作空间
-				</el-button>
 			</div>
 			<el-table :data="state.tableData.data" v-loading="state.tableData.loading" style="width: 100%" row-key="uuid"
-				:tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
+				:tree-props="{ children: 'children', hasChildren: 'hasChildren' }">				
 				<el-table-column label="序号" show-overflow-tooltip width="80">
 					<template #default="scope">
 						{{ scope.$index }}
 					</template>
 				</el-table-column>
 				<el-table-column prop="uuid" label="工作空间ID" show-overflow-tooltip></el-table-column>
-				<el-table-column label="工作空间名称" show-overflow-tooltip>
+				<el-table-column label="模板名称" show-overflow-tooltip>
 					<template #default="scope">
 						<span class="ml10">{{ $t(scope.row.name) }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="归属人" show-overflow-tooltip>
+				<el-table-column label="描述信息" show-overflow-tooltip>
 					<template #default="scope">
-						<span>{{ scope.row.ownerId }}</span>
+						<span>{{ scope.row.info }}</span>
+					</template>
+				</el-table-column>
+				<el-table-column label="镜像信息" show-overflow-tooltip>
+					<template #default="scope">
+						<span>{{ scope.row.image.name }}:{{ scope.row.image.version }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column label="创建时间" show-overflow-tooltip>
@@ -39,16 +38,9 @@
 						<span>{{ scope.row.createTime }}</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="状态" show-overflow-tooltip width="80">
-					<template #default="scope">
-						<el-tag type="success" size="small">{{ scope.row.status }}</el-tag>
-					</template>
-				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="200">
 					<template #default="scope">
-						<el-button size="small" text type="primary">打开IDE</el-button>
-						<el-button size="small" text type="primary">关闭</el-button>
-						<el-button size="small" text type="primary">释放</el-button>
+						<el-button size="small" text type="primary">创建空间</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -79,21 +71,25 @@ const getTableData = () => {
 	let _timestamp: string = new Date().getTime() + "";
 
 	workspaceQuery(gql`
-      query Worksapces {
-        workspaces {
-    		uuid
-            ownerId
-            name
-			status
-            createTime
-  		}
+      query WorksapceTemplate {
+        systemTemplates {
+			uuid,
+			name,
+			info,
+			createTime,
+			image {
+				uuid,
+				name,
+				version
+			}
+    	}
       }
     `, null,
 		{
 			fetchPolicy: "network-only"
 		})
 		.onResult(e => {
-			state.tableData.data = e?.data?.workspaces;
+			state.tableData.data = e?.data?.systemTemplates;
 
 			setTimeout(() => {
 				state.tableData.loading = false;

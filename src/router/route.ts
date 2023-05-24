@@ -76,6 +76,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					roles: ['admin'],
 					icon: 'iconfont icon-xitongshezhi',
 				},
+			},
+			{
+				path: '/template',
+				name: 'template',
+				component: () => import('/@/views/template/index.vue'),
+				meta: {
+					title: 'message.router.template',
+					isLink: '',
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: false,
+					isIframe: false,
+					roles: ['admin'],
+					icon: 'iconfont icon-xitongshezhi',
+				},
 			}
 		],
 	},
