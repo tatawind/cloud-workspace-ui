@@ -10,7 +10,7 @@
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="default" type="success" class="ml10">
+				<el-button size="default" type="success" class="ml10" @click="onCreateWorkspace()">
 					<el-icon>
 						<ele-FolderAdd />
 					</el-icon>
@@ -58,9 +58,10 @@
 </template>
 
 <script setup lang="ts" name="workspace">
-import { onMounted, onActivated, reactive } from 'vue'
+import { onActivated, reactive } from 'vue'
 import { workspaceQuery } from '/@/api/apollo/workspace'
 import gql from 'graphql-tag'
+import router from "/@/router";
 
 // 定义变量内容
 const state = reactive({
@@ -102,13 +103,18 @@ const onQueryWorkspace = () => {
 	let data = queryWorkspace();
 	data.onResult(e => {
 		state.tableData.data = e?.data?.workspaces;
-		
+
 		setTimeout(() => {
 			state.tableData.loading = e?.loading;
 		}, 500);
 
 	});
+}
 
+const onCreateWorkspace = () => {
+	router.push({
+		path: '/template'
+	})
 }
 
 // 页面加载时
