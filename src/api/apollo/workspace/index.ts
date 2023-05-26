@@ -4,7 +4,7 @@ import {
     InMemoryCache
 } from "@apollo/client/core";
 
-import { provideApolloClient, useQuery } from "@vue/apollo-composable";
+import { provideApolloClient, useMutation, useQuery } from "@vue/apollo-composable";
 
 const httpLink = createHttpLink({
     //uri: 'https://countries.trevorblades.com/',
@@ -23,5 +23,6 @@ const studyClient = new ApolloClient({
 provideApolloClient(studyClient);
 
 const workspaceQuery = useQuery;
+const workspaceMutation = useMutation;
 
-export { workspaceQuery }
+export { workspaceQuery, workspaceMutation }

@@ -2,8 +2,9 @@
 	<div class="system-menu-container layout-pd">
 		<el-card shadow="hover">
 			<div class="system-menu-search mb15">
-				<el-input size="default" placeholder="请输入工作空间名称" style="max-width: 180px"> </el-input>
-				<el-button size="default" type="primary" class="ml10" @click="getTableData">
+				<el-input v-model="state.tableData.params.search" size="default" placeholder="请输入工作空间名称"
+					style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10" @click="onQueryWorkspace()">
 					<el-icon>
 						<ele-Search />
 					</el-icon>
@@ -53,32 +54,31 @@
 				</el-table-column>
 			</el-table>
 		</el-card>
-		<MenuDialog ref="menuDialogRef" @refresh="getTableData()" />
 	</div>
 </template>
 
 <script setup lang="ts" name="workspace">
-import { onMounted, reactive } from 'vue'
+import { onMounted, onActivated, reactive } from 'vue'
 import { workspaceQuery } from '/@/api/apollo/workspace'
 import gql from 'graphql-tag'
-import { debug } from 'console';
 
 // 定义变量内容
 const state = reactive({
 	tableData: {
+		params: {
+			search: ""
+		},
 		data: [] as any[],
 		loading: true,
 	},
 });
 
 // 获取路由数据，真实请从接口获取
-const getTableData = () => {
+const queryWorkspace = () => {
 
 	state.tableData.loading = true;
 
-	let _timestamp: string = new Date().getTime() + "";
-
-	workspaceQuery(gql`
+	const { onResult } = workspaceQuery(gql`
       query Worksapces {
         workspaces {
     		uuid
@@ -90,20 +90,29 @@ const getTableData = () => {
       }
     `, null,
 		{
-			fetchPolicy: "network-only"
-		})
-		.onResult(e => {
-			state.tableData.data = e?.data?.workspaces;
-
-			setTimeout(() => {
-				state.tableData.loading = false;
-			}, 500);
+			fetchPolicy: "no-cache"
 		});
 
-
+	return {
+		onResult
+	}
 };
+
+const onQueryWorkspace = () => {
+	let data = queryWorkspace();
+	data.onResult(e => {
+		state.tableData.data = e?.data?.workspaces;
+		
+		setTimeout(() => {
+			state.tableData.loading = e?.loading;
+		}, 500);
+
+	});
+
+}
+
 // 页面加载时
-onMounted(() => {
-	getTableData();
+onActivated(() => {
+	onQueryWorkspace();
 });
 </script>
