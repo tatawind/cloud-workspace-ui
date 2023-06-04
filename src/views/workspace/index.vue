@@ -42,7 +42,7 @@
 				</el-table-column>
 				<el-table-column label="状态" show-overflow-tooltip width="80">
 					<template #default="scope">
-						<el-tag type="success" size="small">{{ scope.row.status }}</el-tag>
+						<el-tag type="success" size="small">{{ scope.row.createStatus }}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="200">
@@ -85,7 +85,7 @@ const queryWorkspace = () => {
     		uuid
             ownerId
             name
-			status
+			createStatus
             createTime
   		}
       }
